@@ -330,7 +330,7 @@ static const std::array<const std::string, 5> timesync_mode_strings{{
 /*  1 */ "MAVLINK",
 /*  2 */ "ONBOARD",
 /*  3 */ "PASSTHROUGH",
-    /*  4 */ "OFFBOARD",
+/*  4 */ "OFFBOARD",
 }};
 
 
