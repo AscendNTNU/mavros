@@ -53,6 +53,7 @@ enum class timesync_mode
   MAVLINK,              //!< Via TIMESYNC message
   ONBOARD,
   PASSTHROUGH,
+  OFFBOARD,
 };
 
 /**

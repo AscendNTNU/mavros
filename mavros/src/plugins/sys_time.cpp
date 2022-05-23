@@ -354,7 +354,14 @@ private:
       time_unix.source = time_ref_source;
 
       time_ref_pub->publish(time_unix);
-    } else {
+
+      auto ts_mode = uas->get_timesync_mode();
+      if (ts_mode == TSM::OFFBOARD) {
+        const auto time_unix_ns = static_cast<int64_t>(mtime.time_unix_usec * 1000);
+        const auto time_boot_ns = static_cast<int64_t>(mtime.time_boot_ms * 1000000);
+        add_timesync_observation(time_unix_ns - time_boot_ns, time_unix_ns, time_boot_ns);
+      }
+    } else{
       RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 60000, "TM: Wrong FCU time.");
     }
   }
@@ -389,7 +396,7 @@ private:
   void timesync_cb()
   {
     auto ts_mode = uas->get_timesync_mode();
-    if (ts_mode == TSM::NONE || ts_mode == TSM::PASSTHROUGH) {
+    if (ts_mode == TSM::NONE || ts_mode == TSM::PASSTHROUGH || ts_mode == TSM::OFFBOARD) {
       // NOTE(vooon): nothing to do. keep timer running for possible mode change
     } else if (ts_mode == TSM::MAVLINK) {
       send_timesync_msg(0, node->now().nanoseconds());

@@ -325,11 +325,12 @@ std::string to_string(MAV_STATE e)
 // ]]]
 
 //! timesync_mode values
-static const std::array<const std::string, 4> timesync_mode_strings{{
+static const std::array<const std::string, 5> timesync_mode_strings{{
 /*  0 */ "NONE",
 /*  1 */ "MAVLINK",
 /*  2 */ "ONBOARD",
 /*  3 */ "PASSTHROUGH",
+/*  4 */ "OFFBOARD",
 }};
 
 
