@@ -431,7 +431,8 @@ private:
     // Calculate the difference of this sample from the current estimate
     uint64_t deviation = llabs(int64_t(time_offset) - offset_ns);
 
-    if (rtt_ns < max_rtt_sample * 1000000ULL) {                 // Only use samples with low RTT
+    auto ts_mode = uas->get_timesync_mode();
+    if (ts_mode == TSM::OFFBOARD || rtt_ns < max_rtt_sample * 1000000ULL) {                 // Only use samples with low RTT
       if (sync_converged() && (deviation > max_deviation_sample * 1000000ULL)) {
         // Increment the counter if we have a good estimate and are
         // getting samples far from the estimate
